@@ -83,7 +83,6 @@
       box-shadow: 0 0 5px rgba(233, 30, 99, 0.5);
     }
 
-    /* Смайлики для полей ввода */
     .emoji {
       position: absolute;
       left: 10px;
@@ -114,17 +113,14 @@
       margin-bottom: 0;
     }
 
-    @media (max-width: 600px) {
-      label {
-        display: none;
-      }
-
-      input {
-        margin-top: 10px;
-      }
+    .emoji {
+      position: absolute;
+      left: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #e91e63;
     }
 
-    /* Добавление неона */
     @keyframes neon {
       from {
         text-shadow: 0 0 10px rgba(233, 30, 99, 0.8),
@@ -137,12 +133,25 @@
                      0 0 15px rgba(233, 30, 99, 0.8);
       }
     }
+
+    #resultDiv {
+      border: 2px solid #4cadaf;
+      background: linear-gradient(to bottom, #d0fdd4, #a7ebbd);
+      padding: 15px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+    }
+
+    #resultDiv p {
+      color: #262626;
+      margin: 0;
+    }
   </style>
 </head>
 <body>
 
   <div class="container">
-    <form class="registration-form">
+    <form class="registration-form" id="registrationForm" onsubmit="return validateForm()">
       <fieldset>
         <legend>Регистрация</legend>
 
@@ -178,8 +187,8 @@
           <label for="gender">Пол</label>
           <span class="emoji">♂️♀️</span>
           <select id="gender" name="gender">
-            <option value="male">Мужской</option>
-            <option value="female">Женский</option>
+            <option value="м">Мужской</option>
+            <option value="ж">Женский</option>
             <option value="other">Другой</option>
           </select>
         </div>
@@ -198,5 +207,56 @@
       </fieldset>
     </form>
   </div>
+
+  <script>
+    function validateForm() {
+      var form = document.getElementById("registrationForm");
+      var elements = form.elements;
+
+      for (var i = 0; i < elements.length; i++) {
+        if (elements[i].hasAttribute("required") && elements[i].value.trim() === "") {
+          alert("Пожалуйста, заполните все обязательные поля.");
+          return false;
+        }
+      }
+
+      var password = document.getElementById("password").value;
+      var confirmPassword = document.getElementById("confirm-password").value;
+
+      if (password !== confirmPassword) {
+        alert("Пароли не совпадают. Пожалуйста, проверьте введенные пароли.");
+        return false;
+      }
+
+      displayResult();
+      clearFields();
+
+      return false;
+    }
+
+    function displayResult() {
+      var resultDiv = document.createElement("div");
+      resultDiv.id = "resultDiv";
+      var resultText = document.createElement("p");
+      var username = document.getElementById("username").value;
+      var email = document.getElementById("email").value;
+      var gender = document.getElementById("gender").value;
+      var dob = document.getElementById("dob").value;
+
+      resultText.innerHTML = "<span class='custom-span'>Успешно:</span> Данные успешно отправлены." +
+        "<br>Имя пользователя: " + username +
+        "<br>Email: " + email +
+        "<br>Пол: " + gender +
+        "<br>Дата рождения: " + dob;
+
+      resultDiv.appendChild(resultText);
+      document.body.appendChild(resultDiv);
+    }
+
+    function clearFields() {
+      var form = document.getElementById("registrationForm");
+      form.reset();
+    }
+  </script>
 </body>
 </html>
