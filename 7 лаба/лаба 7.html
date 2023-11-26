@@ -1,0 +1,127 @@
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Citizen Pink Calculator</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ephesis&display=swap">
+  <style>
+    body {
+      font-family: 'Ephesis', sans-serif;
+      background: linear-gradient(to right, #f7a8b8, #fdd6e3);
+      margin: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .calculator {
+      background: linear-gradient(to bottom, #fce4ec, #f8bbd0);
+      padding: 20px;
+      border-radius: 15px;
+      box-shadow: 0 0 15px rgb(255, 255, 255);
+    }
+
+    .screen {
+      border: 2px solid #ec407a;
+      background: linear-gradient(to bottom, #f8bbd0, #f48fb1);
+      padding: 15px;
+      border-radius: 12px;
+      margin-bottom: 10px;
+      text-align: right;
+      font-size: 24px;
+      color: #fff;
+    }
+
+    .buttons {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      grid-gap: 10px;
+    }
+
+    button {
+      padding: 15px;
+      font-size: 18px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      background: linear-gradient(to right, #ec407a, #f06292);
+      color: #fff;
+      transition: background 0.3s ease-in-out;
+    }
+
+    button:hover {
+      background: linear-gradient(to right, #d81b60, #f06292);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="calculator">
+    <h2 style="text-align: center; color: #ec407a;">Citizen Pink</h2>
+    <div class="screen" id="screen">0</div>
+    <div class="buttons" onclick="calculate(event)">
+      <button>C</button>
+      <button>CE</button>
+      <button>←</button>
+      <button>/</button>
+      <button>7</button>
+      <button>8</button>
+      <button>9</button>
+      <button>*</button>
+      <button>4</button>
+      <button>5</button>
+      <button>6</button>
+      <button>-</button>
+      <button>1</button>
+      <button>2</button>
+      <button>3</button>
+      <button>+</button>
+      <button>±</button>
+      <button>0</button>
+      <button>.</button>
+      <button>=</button>
+    </div>
+  </div>
+
+  <script>
+    let currentInput = '0';
+    let currentOperator = '';
+    let memory = 0;
+
+    function calculate(event) {
+      const buttonValue = event.target.textContent;
+
+      if (buttonValue === 'C') {
+        currentInput = '0';
+        currentOperator = '';
+      } else if (buttonValue === 'CE') {
+        currentInput = '0';
+      } else if (buttonValue === '←') {
+        currentInput = currentInput.slice(0, -1) || '0';
+      } else if (buttonValue === '=') {
+        currentInput = eval(memory + currentOperator + currentInput).toString();
+        currentOperator = '';
+      } else if (['+', '-', '*', '/'].includes(buttonValue)) {
+        memory = parseFloat(currentInput);
+        currentOperator = buttonValue;
+        currentInput = '0';
+      } else if (buttonValue === '±') {
+        currentInput = (-parseFloat(currentInput)).toString();
+      } else if (buttonValue === '.') {
+        if (!currentInput.includes('.')) {
+          currentInput += buttonValue;
+        }
+      } else {
+        if (currentInput === '0' || currentInput === '-0') {
+          currentInput = buttonValue;
+        } else {
+          currentInput += buttonValue;
+        }
+      }
+
+      document.getElementById('screen').textContent = currentInput;
+    }
+  </script>
+</body>
+</html>
