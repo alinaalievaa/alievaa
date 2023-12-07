@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Multiplication Table</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #ffe6f2; 
+        }
+
+        table {
+            border-collapse: collapse;
+            margin-top: 20px;
+            background-color: #fff; 
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); 
+        }
+
+        th, td {
+            border: 1px solid #e6e6e6; 
+            padding: 10px;
+            text-align: center;
+        }
+
+        th {
+            background-color: #ff99cc; 
+            color: #fff; 
+        }
+    </style>
+</head>
+<body>
+    <script>
+       
+        var table = document.createElement('table');
+        var headerRow = table.insertRow();
+        for (var i = 0; i <= 10; i++) {
+            var headerCell = headerRow.insertCell();
+            headerCell.textContent = i;
+        }
+
+        for (var i = 1; i <= 10; i++) {
+            var row = table.insertRow();
+            for (var j = 0; j <= 10; j++) {
+                var cell = row.insertCell();
+                cell.textContent = i * j;
+            }
+        }
+
+        document.body.appendChild(table);
+    </script>
+</body>
+</html>

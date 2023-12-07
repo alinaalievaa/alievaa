@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Beautiful Calendar - Январь 2024</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background: linear-gradient(to right, #fde6f2, #c9c9ff);
+        }
+
+        table {
+            border-collapse: collapse;
+            margin-top: 20px;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+            background-color: #fff;
+        }
+
+        th, td {
+            border: 1px solid #e6e6e6;
+            padding: 15px;
+            text-align: center;
+            border-radius: 10px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+        }
+
+        th {
+            background: linear-gradient(to right, #ff99cc, #ff66b2);
+            color: #fff;
+            border-radius: 15px 15px 0 0;
+        }
+
+        .weekend {
+            color: #ff0055;
+        }
+
+        .holiday {
+            background: linear-gradient(to right, #ffc2cc, #ffb3b3);
+            color: #fff;
+        }
+
+        .highlight-january {
+            background: linear-gradient(to right, #66c2ff, #3366cc);
+            color: #fff;
+        }
+
+        .highlight-christmas,
+        .highlight-new-year {
+            background: linear-gradient(to right, rgb(235, 160, 238), rgb(65, 78, 255));
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+    <script>
+        function getCalendar(month, year) {
+            if (!month) month = new Date().getMonth() + 1;
+            if (!year) year = new Date().getFullYear();
+
+            var date = new Date(year, month - 1, 1);
+            
+            var table = document.createElement('table');
+            var headerRow = table.insertRow();
+            var daysOfWeek = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс'];
+            
+            for (var i = 0; i < daysOfWeek.length; i++) {
+                var headerCell = headerRow.insertCell();
+                headerCell.textContent = daysOfWeek[i];
+            }
+
+            while (date.getMonth() === month - 1) {
+                var row = table.insertRow();
+                
+                for (var i = 0; i < daysOfWeek.length; i++) {
+                    var cell = row.insertCell();
+                    var day = date.getDate();
+
+                    if (i === 5 || i === 6) {
+                        cell.classList.add('weekend');
+                    }
+
+                    if (date.getMonth() === 0 && (day === 1 || day === 7)) {
+                        cell.classList.add('holiday', 'highlight-january', 'highlight-christmas', 'highlight-new-year');
+                    }
+
+                    cell.textContent = day;
+                    date.setDate(day + 1);
+                }
+            }
+
+            document.body.appendChild(table);
+        }
+
+        document.write('Январь 2024');
+        getCalendar(1, 2024);
+    </script>
+</body>
+</html>
+
