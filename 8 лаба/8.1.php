@@ -60,48 +60,52 @@
     </style>
 </head>
 <body>
-    <script>
-        function getCalendar(month, year) {
-            if (!month) month = new Date().getMonth() + 1;
-            if (!year) year = new Date().getFullYear();
+    <?php
+        function getCalendar($month, $year) {
+            if (!$month) $month = date('n');
+            if (!$year) $year = date('Y');
 
-            var date = new Date(year, month - 1, 1);
+            $date = new DateTime("$year-$month-01");
             
-            var table = document.createElement('table');
-            var headerRow = table.insertRow();
-            var daysOfWeek = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс'];
+            echo '<table>';
+            echo '<tr>';
+            $daysOfWeek = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс'];
             
-            for (var i = 0; i < daysOfWeek.length; i++) {
-                var headerCell = headerRow.insertCell();
-                headerCell.textContent = daysOfWeek[i];
+            foreach ($daysOfWeek as $day) {
+                echo '<th>' . $day . '</th>';
             }
+            echo '</tr>';
 
-            while (date.getMonth() === month - 1) {
-                var row = table.insertRow();
+            while ($date->format('n') == $month) {
+                echo '<tr>';
                 
-                for (var i = 0; i < daysOfWeek.length; i++) {
-                    var cell = row.insertCell();
-                    var day = date.getDate();
+                foreach ($daysOfWeek as $dayOfWeek) {
+                    echo '<td';
 
-                    if (i === 5 || i === 6) {
-                        cell.classList.add('weekend');
+                    if ($dayOfWeek == 'Сб' || $dayOfWeek == 'Вс') {
+                        echo ' class="weekend"';
                     }
 
-                    if (date.getMonth() === 0 && (day === 1 || day === 7)) {
-                        cell.classList.add('holiday', 'highlight-january', 'highlight-christmas', 'highlight-new-year');
+                    if ($date->format('n') == 1 && ($date->format('j') == 1 || $date->format('j') == 7)) {
+                        echo ' class="holiday highlight-january highlight-christmas highlight-new-year"';
                     }
 
-                    cell.textContent = day;
-                    date.setDate(day + 1);
+                    echo '>' . $date->format('j') . '</td>';
+
+                    $date->add(new DateInterval('P1D'));
                 }
+
+                echo '</tr>';
             }
 
-            document.body.appendChild(table);
+            echo '</table>';
         }
 
-        document.write('Январь 2024');
+        echo '<script>';
+        echo 'document.write("Январь 2024");';
+        echo '</script>';
+
         getCalendar(1, 2024);
-    </script>
+    ?>
 </body>
 </html>
-
