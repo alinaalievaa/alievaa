@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Beautiful Calendar - Январь 2024</title>
+    <title>Beautiful Calendar - Май 2024</title>
     <style>
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Segoe UI', Tahoma, sans-serif;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -47,14 +47,14 @@
             color: #fff;
         }
 
-        .highlight-january {
-            background: linear-gradient(to right, #66c2ff, #3366cc);
+        .highlight-may {
+            background: linear-gradient(to right, #b3ffcc, #00cc66);
             color: #fff;
         }
 
-        .highlight-christmas,
-        .highlight-new-year {
-            background: linear-gradient(to right, rgb(235, 160, 238), rgb(65, 78, 255));
+        .highlight-victory-day,
+        .highlight-labor-day {
+            background: linear-gradient(to right, #ff6666, #ff0000);
             color: #fff;
         }
     </style>
@@ -86,8 +86,12 @@
                         echo ' class="weekend"';
                     }
 
-                    if ($date->format('n') == 1 && ($date->format('j') == 1 || $date->format('j') == 7)) {
-                        echo ' class="holiday highlight-january highlight-christmas highlight-new-year"';
+                    if ($date->format('n') == 5 && ($date->format('j') == 1 || $date->format('j') == 9)) {
+                        echo ' class="holiday highlight-may highlight-victory-day"';
+                    }
+
+                    if ($date->format('n') == 5 && $date->format('j') == 1) {
+                        echo ' class="holiday highlight-may highlight-labor-day"';
                     }
 
                     echo '>' . $date->format('j') . '</td>';
@@ -102,10 +106,10 @@
         }
 
         echo '<script>';
-        echo 'document.write("Январь 2024");';
+        echo 'document.write("Май 2024");';
         echo '</script>';
 
-        getCalendar(1, 2024);
+        getCalendar(5, 2024);
     ?>
 </body>
 </html>
